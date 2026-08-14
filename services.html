@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+  <head>
+    <!-- Balises méta essentielles -->
+    <meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="index, follow" />
+<meta name="language" content="fr" />
+<meta name="author" content="Adalberto Furtado" />
+<meta name="keywords" content="création site web, design UX/UI, identité visuelle, référencement SEO, animations web, maintenance site, services numériques, Adalberto Furtado" />
+<meta name="description" content="Découvrez tous les services proposés par Adalberto Furtado : création de sites web, UX/UI design, SEO, identité visuelle, animations, maintenance technique et bien plus.">
+
+<title>Nos Services | Adalberto Furtado – Création de site web & solutions digitales</title>
+
+    <!-- #favicon -->
+    <link
+      rel="shortcut icon"
+      href="assets/images/fav.png"
+      type="image/x-icon"
+    />
+    <!-- AOS  -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- ==== css dependencies start ==== -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <!-- ICON  -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  </head>
+
+  <body>
+    <button id="rtlBtn">rtl</button>
+   
+
+    <!-- header-section start -->
+    <header
+      class="header-section index-one header-menu w-100 pt-1 pt-lg-0 pb-3 pb-lg-0"
+    >
+      <div class="navbar_mainhead header-fixed w-100">
+        <div class="container-fluid px-2 px-xxl-20">
+          <div class="row align-items-center">
+            <div class="col-12">
+              <nav
+                class="navbar navbar-expand-lg position-relative d-flex align-items-center"
+              >
+                <div>
+                  <a
+                    href="index.html"
+                    class="navbar-brand d-none d-sm-flex align-items-center gap-2"
+                  >
+                    <img
+                      src="./assets/images/logo.png"
+                      class="logo"
+                      alt="logo"
+                    />
+                  </a>
+                  <a
+                    href="index.html"
+                    class="navbar-brand d-sm-none d-flex align-items-center gap-2"
+                  >
+                    <img
+                      src="./assets/images/fav.png"
+                      class="logo"
+                      alt="logo"
+                    />
+                  </a>
+                </div>
+                <div
+                  class="collapse navbar-collapse justify-content-center"
+                  id="navbar-content"
+                >
+                  <ul
+                    class="navbar-nav d-flex align-items-lg-center gap-2 gap-lg-1 gap-xl-4 gap-xxl-5 py-2 py-lg-0 ms-2ms-xl-10ms-xxl-20 ps-0ps-xxl-10 align-self-center"
+                  >
+                    <li class="dropdown">
+                      <a href="index.html" class="fs-eleven">Accueil</a>
+                    </li>
+                    <li class="dropdown show-dropdown">
+                      <a href="services.html" class="fs-eleven">Services</a>
+                      <ul class="dropdown-menu drop_menu">
+                        <li>
+                          <a
+                            class="dropdown-item fs-eleven"
+                            href="site-vitrine.html"
+                            >Création de sites web</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item fs-eleven"
+                            href="identite-visuelle.html"
+                            >Identité visuelle & logo</a
+                          >
+                        </li>
+                        <li>
+                          <a class="dropdown-item fs-eleven" href="ux-ui.html"
+                            >UX/UI Design</a
+                          >
+                        </li>
+                        <li>
+                          <a class="dropdown-item fs-eleven" href="seo.html"
+                            >Référencement & SEO</a
+                          >
+                        </li>
+                        <li>
+                          <a class="dropdown-item fs-eleven" href="visuels.html"
+                            >Création de visuels & animations</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item fs-eleven"
+                            href="maintenance.html"
+                            >Maintenance & accompagnement</a
+                          >
+                        </li>
+                      </ul>
+                    </li>
+                    <li class="dropdown show-dropdown">
+                      <a href="portfolio.html" class="fs-eleven">Portfolio</a>
+                    </li>
+                    <li class="dropdown show-dropdown">
+                      <a href="about.html" class="fs-eleven">À propos</a>
+                    </li>
+                    <li class="dropdown show-dropdown">
+                      <a href="contact.html" class="fs-eleven">Contact</a>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <div
+                    class="right-area sidebar-items custom-pos position-relative d-flex gap-3 gap-xl-5 align-items-center"
+                  >
+                    <button
+                      id="toggle"
+                      class="dark_btn d-flex justify-content-center align-items-center fs-three p6-color mood_toggle"
+                    >
+                      <i class="ph-fill ph-moon fs-five" id="mood_icon"></i>
+                    </button>
+                    <div class="single-item target-item">
+                      <div class="cmn-head">
+                        <button
+                          type="button"
+                          aria-label="Button"
+                          class="dark_btn dark_btn d-flex align-items-center justify-content-center rounded-circle position-relative"
+                        >
+                          <span
+                            class="d-flex align-items-center justify-content-center fs-five p6-color"
+                          >
+                            <i class="ph ph-dots-nine"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div
+                        class="nav-items-wrapper d-flex flex-column p-4 p-sm-7 justify-content-between position-fixed top-0 end-0 bottom-0 w-100"
+                      >
+                        <button class="position-absolute close-btn">
+                          <span
+                            class="d-flex align-items-center justify-content-center fs-four n1-color"
+                          >
+                            <i class="ph ph-x"></i>
+                          </span>
+                        </button>
+                        <div
+                          class="nav-items d-flex flex-column justify-content-between gap-8 gap-md-12 h-100"
+                        >
+                          <div
+                            class="nav-items d-flex flex-column justify-content-start gap-6 gap-md-8 h-100"
+                          >
+                            <div
+                              class="nav-items text-center d-grid gap-8 gap-md-15"
+                            >
+                              <a
+                                href="index.html"
+                                class="nav-brand-area d-flex align-items-center justify-content-center gap-2"
+                              >
+                                <span
+                                  class="d-flex align-items-center justify-content-center"
+                                >
+                                  <img
+                                    src="assets/images/logo.png"
+                                    class="logo"
+                                    alt="logo"
+                                  />
+                                </span>
+                              </a>
+                            </div>
+<form action="services.html" method="get">
+  <div class="footer-form">
+    <div class="input-area p-1 p-md-2 d-flex align-items-center justify-content-between gap-2">
+      <input
+        type="text"
+        name="query"
+        placeholder="Rechercher un service (ex : logo, site web...)"
+        class="w-100 n1-color"
+      />
+      <button
+        type="submit"
+        class="form-btn rounded-3 d-flex align-items-center justify-content-center"
+      >
+        <i class="ph ph-magnifying-glass p2-color fs-four"></i>
+      </button>
+    </div>
+  </div>
+</form>
+
+                           <div class="px-0 px-md-3">
+  <h5 class="mb-2 n1-color">//ME CONTACTER</h5>
+  <div class="single-box address">
+    <ul class="d-grid gap-3 gap-md-4">
+      <li class="d-flex align-items-center gap-3">
+        <span class="box-area d-flex align-items-center justify-content-center rounded-circle n1-color fs-six box-area box-three">
+          <i class="ph ph-envelope-open"></i>
+        </span>
+        <span class="n1-color text-start">info@adalbertofurtado.com</span>
+      </li>
+      <li class="d-flex align-items-center gap-3">
+        <span class="box-area d-flex align-items-center justify-content-center rounded-circle n1-color fs-six box-area box-three">
+          <i class="ph ph-map-pin"></i>
+        </span>
+        <span class="n1-color text-start">Martigues, France</span>
+      </li>
+      <li class="d-flex align-items-center gap-3">
+        <span class="box-area d-flex align-items-center justify-content-center rounded-circle n1-color fs-six box-area box-three">
+          <i class="ph ph-phone-incoming"></i>
+        </span>
+        <a href="tel:+33753911502" class="n1-color text-start">07 53 91 15 02</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="px-0 px-md-3">
+  <h5 class="mb-2 n1-color">//SUIVEZ-MOI</h5>
+  <ul class="d-flex align-items-center gap-2 gap-md-3 social-area second">
+    <li>
+      <a href="https://www.facebook.com/dk.furtado" aria-label="Facebook" class="d-flex align-items-center justify-content-center transition">
+        <span class="d-flex align-items-center justify-content-center transition fs-six n1-color">
+          <i class="ph ph-facebook-logo"></i>
+        </span>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.instagram.com/adalbertofurtado/" aria-label="Instagram" class="d-flex align-items-center justify-content-center transition">
+        <span class="d-flex align-items-center justify-content-center transition fs-six n1-color">
+          <i class="ph ph-instagram-logo"></i>
+        </span>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.tiktok.com/@adalbertoweb" aria-label="TikTok" class="d-flex align-items-center justify-content-center transition">
+        <span class="d-flex align-items-center justify-content-center transition fs-six n1-color">
+          <i class="ph ph-tiktok-logo"></i> <!-- Si l'icône TikTok n'existe pas, je peux t’ajouter un SVG -->
+        </span>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.youtube.com/@adalbertofurtado9433" aria-label="YouTube" class="d-flex align-items-center justify-content-center transition">
+        <span class="d-flex align-items-center justify-content-center transition fs-six n1-color">
+          <i class="ph ph-youtube-logo"></i>
+        </span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<a href="contact.html" class="btn2 p6-color text-center d-none d-xl-block">
+  <span class="btn-text-one">Demander un devis</span>
+  <span class="btn-text-two">Demander un devis</span>
+</a>
+</div>
+                  <button
+                    class="navbar-toggler mt-1"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    aria-label="Navbar Toggler"
+                    data-bs-target="#navbar-content"
+                    aria-expanded="true"
+                    id="nav-icon3"
+                  >
+                    <span></span><span></span><span></span><span></span>
+                  </button>
+                </div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- header-section end -->
+
+
+    <!-- banner section start -->
+
+    <div class="banner">
+      <div
+        class="banner_bg_color opacity-75 d-flex align-items-center justify-content-center h-100"
+      >
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-5">
+              <div class="process_heading w-100 text-start">
+                <h4 class="fs-two p3-color fw-semibold mb-2 text-start">
+                  Mes Services
+                </h4>
+                <span class="p6-color fs-ten d-block text-start">
+                  Découvrez mes prestations sur-mesure pour accompagner les
+                  entreprises et indépendants dans leur communication digitale.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="breadcrumb-area d-flex justify-content-end me-10 me-md-20">
+        <nav aria-label="breadcrumb">
+          <ol
+            class="breadcrumb bg1-color py-3 px-4 px-md-5 position-relative m-0 d-inline-flex align-items-center justify-content-center flex-wrap gap-3 gap-md-5"
+          >
+            <li
+              class="breadcrumb-item d-flex align-items-center justify-content-center fs-seven"
+            >
+              <a href="index.html" class="fw-normal">Accueil</a>
+            </li>
+            <li
+              class="breadcrumb-item d-flex align-items-center justify-content-center fs-seven p6-color active"
+              aria-current="page"
+            >
+              <span class="p6-color">Services</span>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <!-- banner section end -->
+
+    <!-- service section start -->
+    <section class="service-section bg7-color">
+      <div class="container bg7-color pt-120 pb-120">
+        <div class="row gy-6 gy-md-0 mb-7 mb-lg-15 justify-content-center">
+          <div class="col-md-7 col-lg-6">
+            <div
+              class="d-flex flex-wrap gap-5 justify-content-between align-items-end"
+              data-aos="fade-down"
+              data-aos-duration="800"
+            >
+              <div class="service_heading text-center">
+                <span class="fs-ten fw-semibold p2-color mb-2">
+                  Mes prestations
+                </span>
+                <h2 class="fs-two fw-semibold p8-color mb-6">
+                  Des services adaptés à vos besoins
+                </h2>
+                <p class="fs-ten p4-color">
+                  Création de site web, design, SEO, identité visuelle... Je
+                  vous propose des solutions digitales complètes et
+                  personnalisées.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Grille des services -->
+        <div class="row gy-5">
+          <!-- 1. Création de sites web -->
+          <div class="col-12 col-sm-6 col-xl-4">
+            <div class="single-item ...">
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="img-area"
+                  ><img src="assets/images/web.png" alt="web"
+                /></span>
+                <span class="number-area display-two">01</span>
+              </div>
+              <a href="services.html"
+                ><h3 class="p8-color">Création de sites web</h3></a
+              >
+              <div class="thump-img-area position-relative">
+                <img
+                  src="assets/images/service1.png"
+                  class="rounded-4"
+                  alt="site web"
+                />
+                <a
+                  href="site-vitrine.html"
+                  class="icon-area position-absolute z-1"
+                >
+                  <span><i class="ph ph-arrow-up-right"></i></span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Identité visuelle & logo -->
+          <div class="col-12 col-sm-6 col-xl-4">
+            <div class="single-item ...">
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="img-area"
+                  ><img src="assets/images/logo.png" alt="logo"
+                /></span>
+                <span class="number-area display-two">02</span>
+              </div>
+              <a href="services.html"
+                ><h3 class="p8-color">Identité visuelle & logo</h3></a
+              >
+              <div class="thump-img-area position-relative">
+                <img
+                  src="assets/images/service2.png"
+                  class="rounded-4"
+                  alt="identité visuelle"
+                />
+                <a href="services.html" class="icon-area position-absolute z-1">
+                  <span><i class="ph ph-arrow-up-right"></i></span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Design UX/UI -->
+          <div class="col-12 col-sm-6 col-xl-4">
+            <div class="single-item ...">
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="img-area"
+                  ><img src="assets/images/apps.png" alt="ux/ui"
+                /></span>
+                <span class="number-area display-two">03</span>
+              </div>
+              <a href="services.html"><h3 class="p8-color">Design UX/UI</h3></a>
+              <div class="thump-img-area position-relative">
+                <img
+                  src="assets/images/service3.png"
+                  class="rounded-4"
+                  alt="design UX UI"
+                />
+                <a href="services.html" class="icon-area position-absolute z-1">
+                  <span><i class="ph ph-arrow-up-right"></i></span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Référencement & SEO -->
+          <div class="col-12 col-sm-6 col-xl-4">
+            <div class="single-item ...">
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="img-area"
+                  ><img src="assets/images/seo.png" alt="SEO"
+                /></span>
+                <span class="number-area display-two">04</span>
+              </div>
+              <a href="services.html"
+                ><h3 class="p8-color">Référencement & SEO</h3></a
+              >
+              <div class="thump-img-area position-relative">
+                <img
+                  src="assets/images/service4.png"
+                  class="rounded-4"
+                  alt="SEO"
+                />
+                <a href="services.html" class="icon-area position-absolute z-1">
+                  <span><i class="ph ph-arrow-up-right"></i></span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Visuels & animations -->
+          <div class="col-12 col-sm-6 col-xl-4">
+            <div class="single-item ...">
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="img-area"
+                  ><img src="assets/images/plan.png" alt="animations"
+                /></span>
+                <span class="number-area display-two">05</span>
+              </div>
+              <a href="services.html"
+                ><h3 class="p8-color">Visuels & animations</h3></a
+              >
+              <div class="thump-img-area position-relative">
+                <img
+                  src="assets/images/service5.png"
+                  class="rounded-4"
+                  alt="visuels"
+                />
+                <a href="services.html" class="icon-area position-absolute z-1">
+                  <span><i class="ph ph-arrow-up-right"></i></span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. Maintenance & suivi -->
+          <div class="col-12 col-sm-6 col-xl-4">
+            <div class="single-item ...">
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="img-area"
+                  ><img src="assets/images/service.png" alt="maintenance"
+                /></span>
+                <span class="number-area display-two">06</span>
+              </div>
+              <a href="services.html"
+                ><h3 class="p8-color">Maintenance & suivi</h3></a
+              >
+              <div class="thump-img-area position-relative">
+                <img
+                  src="assets/images/service6.png"
+                  class="rounded-4"
+                  alt="maintenance"
+                />
+                <a href="services.html" class="icon-area position-absolute z-1">
+                  <span><i class="ph ph-arrow-up-right"></i></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- service section end  -->
+
+    <!-- Footer section start -->
+    <section
+      class="bg11-color footer_section"
+      data-bg="./assets/images/footer-bg.png"
+    >
+      <div class="pt-120 pb-120">
+        <div class="container-fluid px-2 px-xl-20">
+          <div class="row g-8 g-md-6 px-2 px-lg-20">
+            <div class="col-md-4">
+              <h4 class="fs-five p6-color mb-3 mb-md-5">Adresse</h4>
+              <ul class="col-lg-8">
+                <li>
+                  <span class="fs-ten p6-color fw-medium"
+                    >Martigues, France</span
+                  >
+                </li>
+              </ul>
+              <div
+                class="social_info position-relative z-1 d-inline-flex mt-4 mt-md-6 align-items-center"
+              >
+                <div
+                  class="d-flex justify-content-center flex-wrap flex-xl-nowrap gap-3"
+                >
+                  <a
+                    href="javascriopt:void(0)"
+                    class="contact_icon d-flex justify-content-center align-items-center"
+                  >
+                    <i class="ph ph-facebook-logo fs-six p6-color"></i>
+                  </a>
+                  <a
+                    href="javascriopt:void(0)"
+                    class="contact_icon d-flex justify-content-center align-items-center"
+                  >
+                    <i class="ph ph-x-logo fs-six p6-color"></i>
+                  </a>
+                  <a
+                    href="javascriopt:void(0)"
+                    class="contact_icon d-flex justify-content-center align-items-center"
+                  >
+                    <i class="ph ph-linkedin-logo fs-six p6-color"></i>
+                  </a>
+                  <a
+                    href="javascriopt:void(0)"
+                    class="contact_icon d-flex justify-content-center align-items-center"
+                  >
+                    <i class="ph ph-instagram-logo fs-six p6-color"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-sm-4 d-flex flex-column align-items-start align-items-sm-center"
+            >
+              <div class="item-wrapper">
+                <h4 class="fs-five p6-color mb-3 mb-md-5">Contact</h4>
+                <ul class="d-grid gap-4 gap-md-5">
+                  <li class="d-grid gap-1 gap-md-2">
+                    <span class="fs-ten p6-color fw-medium">Email:</span>
+                    <span class="fs-ten p6-color fw-mid"
+                      >info@adalbertofurtado.com</span
+                    >
+                  </li>
+                  <li class="d-grid gap-1 gap-md-2">
+                    <span class="fs-ten p6-color fw-medium">Téléphone:</span>
+                    <span class="fs-ten p6-color fw-mid">07 53 91 15 02</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div
+              class="col-sm-4 d-flex flex-column align-items-start align-items-sm-end"
+            >
+              <div class="item-wrapper">
+                <h4 class="fs-five p6-color mb-3 mb-md-5">Informations</h4>
+                <ul>
+                  <li>
+                    <a
+                      href="about.html"
+                      class="d-flex align-items-center flex-shrink-0 gap-2 mb-2 mb-md-3"
+                    >
+                      <div>
+                        <img src="./assets/images/point.png" alt="point" />
+                      </div>
+                      <span class="fs-ten p6-color fw-medium footer_tag"
+                        >À propos</span
+                      >
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="Tarifs.html"
+                      class="d-flex align-items-center flex-shrink-0 gap-2 mb-2 mb-md-3"
+                    >
+                      <div>
+                        <img src="./assets/images/point.png" alt="point" />
+                      </div>
+                      <span class="fs-ten p6-color fw-medium footer_tag"
+                        >Tarifs</span
+                      >
+                    </a>
+                  </li>
+
+                  <li>
+                    <a
+                      href="blog.html"
+                      class="d-flex align-items-center flex-shrink-0 gap-2 mb-2 mb-md-3"
+                    >
+                      <div>
+                        <img src="./assets/images/point.png" alt="point" />
+                      </div>
+                      <span class="fs-ten p6-color fw-medium footer_tag"
+                        >Blog</span
+                      >
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="faqs.html"
+                      class="d-flex align-items-center flex-shrink-0 gap-2 mb-2 mb-md-3"
+                    >
+                      <div>
+                        <img src="./assets/images/point.png" alt="point" />
+                      </div>
+                      <span class="fs-ten p6-color fw-medium footer_tag"
+                        >FAQ</span
+                      >
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center pt-8 pt-md-16">
+          <span class="p6-color text-uppercase display-six text-center"
+            >ADALBERTO- WEB & DESIGN</span
+          >
+        </div>
+      </div>
+      <hr class="border cus-border border-four my-0" />
+      <div
+        class="container-fluid text-center px-2 px-md-20 d-flex sm:gap-3 flex-wrap justify-content-center justify-content-xl-between gap-3 gap-lg-9 py-3 py-md-6"
+      >
+        <span class="p6-color sm:fs-ten order-1 order-xl-0"
+          >Adalberto Furtado. Tous droits réservés.</span
+        >
+        <div class="d-flex flex-wrap gap-4">
+          <a href="terms.html" class="p6-color sm:fs-ten"
+            >Conditions générales</a
+          >
+          <span class="p6-color sm:fs-ten">|</span>
+          <a href="privacy.html" class="p6-color sm:fs-ten"
+            >Politique de confidentialité</a
+          >
+        </div>
+      </div>
+    </section>
+    <!-- Footer section end -->
+
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/plugins/plugins.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="./assets/js/custom-plugin.js"></script>
+    <script>
+      AOS.init({
+        offset: 120,
+        duration: 800,
+        easing: "ease-in-out",
+      });
+    </script>
+  </body>
+</html>
