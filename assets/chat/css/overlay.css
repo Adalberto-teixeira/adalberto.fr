@@ -1,0 +1,173 @@
+/* =================================================================== */
+/* OVERLAY — transforme le chat ChatFolio (pensé pour une page entière)
+   en panneau flottant au-dessus des pages Velixo.
+====================================================================== */
+
+/* =================================================================== */
+/* Le fichier style.css du ChatFolio suppose qu'il possede sa PROPRE
+   page <body>, et force "body { display:flex; justify-content:center }".
+   Sur ce site, le <body> appartient a Velixo — on annule cette regle
+   pour ne pas casser la mise en page du site. */
+body.vx-demo-3 {
+  display: block;
+  overflow-x: hidden;
+}
+
+/* Bouton flottant pour ouvrir l'assistant, visible sur toutes les pages */
+.ai-chat-fab {
+  position: fixed;
+  left: 28px;
+  bottom: 28px;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px;
+  border-radius: 999px;
+  background: var(--velixo-primary, #1b74e4);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 16px 40px -10px rgba(27, 116, 228, 0.6);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.ai-chat-fab:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 50px -8px rgba(27, 116, 228, 0.7);
+}
+.ai-chat-fab i {
+  font-size: 16px;
+}
+
+@media (max-width: 1024px) {
+  .ai-chat-fab span { display: none; }
+  .ai-chat-fab { padding: 16px; left: 18px; bottom: 18px; }
+}
+
+/* Le panneau plein-écran qui contient le widget ChatFolio tel quel */
+.ai-chat-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  /* Ferme => retire completement de la page : aucun blocage du defilement */
+  display: none !important;
+}
+.ai-chat-overlay.active {
+  display: flex !important;
+  animation: aiChatFadeIn 0.25s ease forwards;
+}
+
+/* IMPORTANT : n'animer QUE l'opacite.
+   Un "transform" sur ce conteneur ferait perdre le position:fixed de la
+   barre de saisie, qui se retrouverait au milieu de la conversation. */
+@keyframes aiChatFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Centre le chat horizontalement (comme les assistants IA classiques) */
+#ai-chat-overlay .chat-wrapper {
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: none;
+}
+
+/* La barre de saisie est en position fixe : on l'aligne sur la colonne
+   de conversation pour qu'elle ne soit plus decalee. */
+#ai-chat-overlay .chat-footer {
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Bouton de fermeture du panneau */
+.ai-chat-close {
+  position: fixed;
+  top: 18px;
+  right: 22px;
+  z-index: 10060;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(17, 24, 39, 0.6);
+  color: #fff;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+}
+
+/* Empêche le double scroll de la page derrière le panneau ouvert */
+body.chat-open,
+html:has(body.chat-open) {
+  overflow: hidden;
+}
+
+/* Photo de l'ecran d'accueil du chat : cadrage propre et arrondi */
+#ai-chat-overlay .intro-screen .intro-image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 24px;
+}
+
+/* Confort de lecture : la conversation reste dans une colonne centree */
+#ai-chat-overlay .chat-area-content {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Textes verticaux : plus petits et mieux centres pour que le nom
+   complet reste lisible et ne soit plus coupe en bas de l'ecran. */
+#ai-chat-overlay .vertical-texts-container .vertical-text {
+  font-size: 2.1rem;
+  letter-spacing: 2px;
+  opacity: .12;
+  max-height: 92vh;
+  overflow: hidden;
+}
+
+body.dark #ai-chat-overlay .vertical-texts-container .vertical-text {
+  opacity: .16;
+}
+
+/* Le bouton de fermeture ne doit pas chevaucher l'interrupteur de theme */
+.ai-chat-close {
+  top: 20px;
+  right: 20px;
+}
+#ai-chat-overlay .skin {
+  top: 22px;
+}
+
+/* Interrupteur clair/sombre du chat : meme effet de survol bleu que le
+   bouton de theme du site (bouton bleu, icone en blanc). */
+#ai-chat-overlay .skin .checkbox-label {
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+#ai-chat-overlay .skin .checkbox-label:hover,
+body.dark #ai-chat-overlay .skin .checkbox-label:hover {
+  background-color: var(--velixo-primary, #1b74e4);
+  border-color: var(--velixo-primary, #1b74e4);
+}
+/* Les icones sont des SVG : on force leur trait en blanc au survol */
+#ai-chat-overlay .skin .checkbox-label:hover svg path {
+  stroke: #fff;
+}
+
+/* Meme traitement pour le bouton de fermeture, par coherence */
+.ai-chat-close {
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+.ai-chat-close:hover {
+  background-color: var(--velixo-primary, #1b74e4);
+  border-color: var(--velixo-primary, #1b74e4);
+  color: #fff;
+}

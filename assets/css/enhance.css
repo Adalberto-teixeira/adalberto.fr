@@ -1,0 +1,271 @@
+/* ============================================================
+   ENHANCE.CSS — Interactivité & sections de conviction
+   Additif à main.css, ne modifie aucune règle existante.
+   ============================================================ */
+
+/* ---------- STAT COUNTERS ---------- */
+.vx-demo-3 .stats-band {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin: 56px 0 0;
+  padding: 40px 0;
+  border-top: 1px solid var(--velixo-border);
+  border-bottom: 1px solid var(--velixo-border);
+}
+
+.vx-demo-3 .stat-item {
+  text-align: left;
+}
+
+.vx-demo-3 .stat-number {
+  font-family: "Archivo", sans-serif;
+  font-weight: 900;
+  font-size: clamp(30px, 3vw, 44px);
+  line-height: 1;
+  color: var(--velixo-primary);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.vx-demo-3 .stat-label {
+  display: block;
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--velixo-text-muted);
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  .vx-demo-3 .stats-band { grid-template-columns: repeat(2, 1fr); row-gap: 32px; }
+}
+
+/* ---------- COMMITMENT / ENGAGEMENT CARDS ---------- */
+.vx-demo-3 .engagement-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+
+.vx-demo-3 .engagement-card {
+  position: relative;
+  padding: 32px 26px;
+  border-radius: var(--radius-xl);
+  background: var(--velixo-card);
+  border: 1px solid var(--velixo-border);
+  transition: var(--velixo-transition);
+  overflow: hidden;
+}
+
+.vx-demo-3 .engagement-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(var(--velixo-primary-rgb), 0.08), transparent 60%);
+  opacity: 0;
+  transition: var(--velixo-transition);
+}
+
+.vx-demo-3 .engagement-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(var(--velixo-primary-rgb), 0.35);
+  box-shadow: 0 20px 40px -20px rgba(var(--velixo-primary-rgb), 0.35);
+}
+
+.vx-demo-3 .engagement-card:hover::before { opacity: 1; }
+
+.vx-demo-3 .engagement-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(var(--velixo-primary-rgb), 0.12);
+  color: var(--velixo-primary);
+  font-size: 18px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.vx-demo-3 .engagement-card h4 {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.vx-demo-3 .engagement-card p {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--velixo-text-muted);
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .vx-demo-3 .engagement-grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- SKILL PROGRESS BARS ---------- */
+.vx-demo-3 .skillbar-list { margin-top: 40px; }
+
+.vx-demo-3 .skillbar-row {
+  margin-bottom: 26px;
+}
+
+.vx-demo-3 .skillbar-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+
+.vx-demo-3 .skillbar-name {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.vx-demo-3 .skillbar-pct {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--velixo-primary);
+  font-family: "Archivo", sans-serif;
+}
+
+.vx-demo-3 .skillbar-track {
+  height: 8px;
+  border-radius: 20px;
+  background: rgba(var(--velixo-primary-rgb), 0.1);
+  overflow: hidden;
+}
+
+.vx-demo-3 .skillbar-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 20px;
+  background: linear-gradient(90deg, var(--velixo-primary), var(--velixo-secondary));
+  transition: width 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---------- MAGNETIC / PULSE CTA ---------- */
+.vx-demo-3 .btn-magnetic {
+  will-change: transform;
+}
+
+.vx-demo-3 .pitch-close {
+  position: relative;
+  text-align: center;
+  padding: 64px 40px !important;
+  border-radius: var(--radius-3xl);
+  background: linear-gradient(160deg, rgba(var(--velixo-primary-rgb), 0.06), rgba(var(--velixo-secondary-rgb), 0.04));
+  border: 1px solid var(--velixo-border);
+}
+
+.vx-demo-3 .pitch-close h3 {
+  font-size: clamp(24px, 2.6vw, 34px);
+  font-weight: 800;
+  margin-bottom: 14px;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.vx-demo-3 .pitch-close .cta-row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+
+/* ---------- SCROLL PROGRESS BAR ---------- */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--velixo-primary), var(--velixo-secondary));
+  z-index: 9999;
+  transition: width 0.1s linear;
+}
+
+/* ---------- AVATAR TILT ---------- */
+.vx-demo-3 .id-avatar { transform-style: preserve-3d; }
+
+/* ---------- PROJECT CARD TILT ---------- */
+.vx-demo-3 .works-feed-item { transform-style: preserve-3d; }
+
+/* ---------- PROJECT IMAGE SIZING ---------- */
+.vx-demo-3 .work-img-wrapper {
+  aspect-ratio: 16 / 10;
+  background: var(--velixo-bg);
+  padding: 10px;
+}
+
+.vx-demo-3 .work-img-wrapper img {
+  object-fit: contain;
+  border-radius: 24px;
+}
+
+/* ---------- SOCIAL PILL WRAP SAFETY ---------- */
+.vx-demo-3 .social-pill {
+  flex-wrap: wrap;
+}
+
+@media (max-width: 1300px) {
+  .vx-demo-3 .social-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 16px;
+  }
+}
+
+/* ---------- CHAT PROJECT THUMBNAILS ---------- */
+.generic-flow .chat-project-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 14px;
+  overflow: hidden;
+  margin: 8px 0 10px;
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.generic-flow .chat-project-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ---------- FORM MICRO-FEEDBACK ---------- */
+.vx-demo-3 .form-status {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 14px 20px;
+  border-radius: 16px;
+  background: rgba(34, 197, 94, 0.1);
+  color: #16a34a;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.vx-demo-3 .form-status.visible { display: flex; }
+
+.vx-demo-3 .form-control {
+  transition: var(--velixo-transition);
+}
+
+.vx-demo-3 .form-control.field-valid {
+  border-color: rgba(34, 197, 94, 0.5) !important;
+}
