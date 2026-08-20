@@ -246,6 +246,62 @@
   object-fit: contain;
 }
 
+/* ---------- CHAT TOGGLE INSIDE MOBILE NAV BAR ---------- */
+/* Caché par défaut (desktop garde le bouton flottant classique) */
+.vx-demo-3 .chat-toggle-mobile {
+  display: none;
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+  cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .vx-demo-3 .chat-toggle-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--velixo-primary, #1b74e4);
+    color: #fff;
+  }
+  .vx-demo-3 .chat-toggle-mobile:hover {
+    background: var(--velixo-primary, #1b74e4);
+  }
+}
+
+/* ---------- THEME TOGGLE: SORT DE LA BARRE DU BAS SUR MOBILE ---------- */
+/* L'icône lune/soleil d'origine (dans la barre du bas) est cachée sur mobile */
+@media (max-width: 1024px) {
+  .vx-demo-3 #theme-toggle {
+    display: none !important;
+  }
+}
+
+/* Bouton clone, fixé en haut à droite, visible uniquement sur mobile/tablette */
+.theme-toggle-fixed {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .theme-toggle-fixed {
+    display: flex;
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 10001;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 16px;
+    background: rgba(var(--velixo-card-rgb), 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+  }
+}
+
 /* ---------- FORM MICRO-FEEDBACK ---------- */
 .vx-demo-3 .form-status {
   display: none;

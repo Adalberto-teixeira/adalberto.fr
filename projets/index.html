@@ -27,6 +27,11 @@
   </head>
   <body class="vx-demo-3">
 
+    <!-- Bascule clair/sombre : visible en haut a droite uniquement sur mobile/tablette -->
+    <div class="control-btn dark-toggle theme-toggle-fixed" id="theme-toggle-mobile">
+      <i class="fa-solid fa-moon"></i>
+    </div>
+
     <div class="vx-3-wrapper">
 
       <aside class="vx-3-identity">
@@ -206,6 +211,9 @@
       </nav>
 
       <div class="sidebar-footer">
+        <div class="control-btn chat-toggle-mobile" onclick="document.getElementById('ai-chat-fab').click()">
+          <i class="fa-solid fa-comment-dots"></i>
+        </div>
         <div class="control-btn dark-toggle" id="theme-toggle">
           <i class="fa-solid fa-moon"></i>
         </div>

@@ -42,8 +42,10 @@ body.vx-demo-3 {
 }
 
 @media (max-width: 1024px) {
-  .ai-chat-fab span { display: none; }
-  .ai-chat-fab { padding: 16px; left: 18px; bottom: 18px; }
+  /* Sur mobile/tablette, le bouton flottant est remplacé par une icône
+     dans la barre de navigation du bas (voir .chat-toggle-mobile) pour
+     éviter qu'il ne chevauche cette barre. */
+  .ai-chat-fab { display: none !important; }
 }
 
 /* Le panneau plein-écran qui contient le widget ChatFolio tel quel */
