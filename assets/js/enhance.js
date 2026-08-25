@@ -4,6 +4,32 @@
 (function () {
   "use strict";
 
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  /* ---------- Safe staggered reveals ---------- */
+  const projectCards = [...document.querySelectorAll(".project-reveal")];
+  if (projectCards.length && !reducedMotion.matches && "IntersectionObserver" in window) {
+    document.documentElement.classList.add("motion-enabled");
+    const projectObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const siblings = [...entry.target.parentElement.children].filter((el) =>
+            el.classList.contains("project-reveal")
+          );
+          const index = siblings.indexOf(entry.target);
+          entry.target.style.setProperty("--reveal-delay", `${(index % 2) * 55}ms`);
+          entry.target.classList.add("is-visible");
+          projectObserver.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -4%" }
+    );
+    projectCards.forEach((card) => projectObserver.observe(card));
+  } else {
+    projectCards.forEach((card) => card.classList.add("is-visible"));
+  }
+
   /* ---------- Scroll progress bar ---------- */
   const progress = document.createElement("div");
   progress.id = "scroll-progress";
@@ -54,7 +80,7 @@
   document.querySelectorAll("[data-count], .skillbar-fill").forEach((el) => revealObserver.observe(el));
 
   /* ---------- Magnetic buttons ---------- */
-  document.querySelectorAll(".btn-magnetic").forEach((btn) => {
+  if (!reducedMotion.matches) document.querySelectorAll(".btn-magnetic").forEach((btn) => {
     let bounds;
     btn.addEventListener("mouseenter", () => { bounds = btn.getBoundingClientRect(); });
     btn.addEventListener("mousemove", (e) => {
@@ -69,7 +95,7 @@
   });
 
   /* ---------- Subtle avatar / card tilt (desktop only) ---------- */
-  if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  if (!reducedMotion.matches && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
     document.querySelectorAll(".id-avatar, .works-feed-item").forEach((card) => {
       card.addEventListener("mousemove", (e) => {
         const rect = card.getBoundingClientRect();
