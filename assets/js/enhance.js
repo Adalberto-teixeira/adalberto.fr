@@ -9,6 +9,11 @@
   /* ---------- Safe staggered reveals ---------- */
   const projectCards = [...document.querySelectorAll(".project-reveal")];
   if (projectCards.length && !reducedMotion.matches && "IntersectionObserver" in window) {
+    projectCards.forEach((card) => {
+      if (card.getBoundingClientRect().top < window.innerHeight * 0.92) {
+        card.classList.add("is-visible");
+      }
+    });
     document.documentElement.classList.add("motion-enabled");
     const projectObserver = new IntersectionObserver(
       (entries) => {
@@ -25,7 +30,9 @@
       },
       { threshold: 0.12, rootMargin: "0px 0px -4%" }
     );
-    projectCards.forEach((card) => projectObserver.observe(card));
+    projectCards
+      .filter((card) => !card.classList.contains("is-visible"))
+      .forEach((card) => projectObserver.observe(card));
   } else {
     projectCards.forEach((card) => card.classList.add("is-visible"));
   }
