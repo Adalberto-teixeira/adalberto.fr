@@ -426,6 +426,126 @@
   .preview-phone { width: 58%; }
 }
 
+/* ---------- RESPONSIVE HARDENING ---------- */
+/* Entre tablette et petit portable, la zone éditoriale ne permet pas
+   deux cartes confortables : on conserve une colonne lisible. */
+@media (min-width: 1025px) and (max-width: 1199px) {
+  .vx-demo-3 .project-reveal {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .vx-demo-3 .vx-3-identity {
+    padding: 64px 20px 58px;
+  }
+
+  .vx-demo-3 .vx-3-feed {
+    padding: 64px 20px calc(126px + env(safe-area-inset-bottom));
+  }
+
+  .vx-demo-3 .feed-section {
+    margin-bottom: 78px;
+  }
+
+  .vx-demo-3 .work-img-wrapper {
+    border-radius: 26px;
+    margin-bottom: 20px;
+  }
+
+  .vx-demo-3 .editorial-post-title {
+    font-size: clamp(22px, 7vw, 28px);
+    overflow-wrap: anywhere;
+  }
+
+  .vx-demo-3 .work-meta-editorial {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .vx-demo-3 .work-meta-editorial span {
+    max-width: 100%;
+    line-height: 1.35;
+    letter-spacing: 1.2px;
+  }
+
+  .vx-demo-3 .pitch-close {
+    padding: 44px 20px !important;
+    border-radius: 28px;
+  }
+
+  .vx-demo-3 .sidebar-right-vx {
+    bottom: max(12px, env(safe-area-inset-bottom));
+    max-width: calc(100vw - 20px);
+    padding: 7px 9px;
+  }
+
+  .vx-demo-3 .sidebar-nav {
+    gap: 4px;
+  }
+
+  .vx-demo-3 .sidebar-footer {
+    padding-left: 8px;
+  }
+
+  .vx-demo-3 .nav-item,
+  .vx-demo-3 .control-btn,
+  .vx-demo-3 .chat-toggle-mobile {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+  }
+
+  .theme-toggle-fixed {
+    top: max(14px, env(safe-area-inset-top));
+    right: 14px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .preview-browser { width: min(100%, 330px); }
+  .preview-phone { width: min(62%, 205px); min-width: 142px; }
+  .preview-marina-card { min-height: 154px; }
+  .preview-marina-content { padding: 14px; }
+  .preview-marina-content strong { font-size: 14px; }
+
+  #ai-chat-overlay .chat-footer {
+    padding-bottom: max(15px, env(safe-area-inset-bottom));
+  }
+
+  .ai-chat-close {
+    top: max(14px, env(safe-area-inset-top));
+    right: 14px;
+  }
+}
+
+@media (max-width: 359px) {
+  .vx-demo-3 .vx-3-identity { padding-inline: 16px; }
+  .vx-demo-3 .vx-3-feed { padding-inline: 16px; }
+  .vx-demo-3 .id-name { font-size: 42px; }
+  .vx-demo-3 .editorial-title { font-size: 29px; }
+  .vx-demo-3 .sidebar-right-vx { max-width: calc(100vw - 12px); padding-inline: 7px; }
+  .vx-demo-3 .sidebar-nav { gap: 2px; }
+  .vx-demo-3 .sidebar-footer { padding-left: 6px; }
+  .vx-demo-3 .nav-item,
+  .vx-demo-3 .control-btn,
+  .vx-demo-3 .chat-toggle-mobile { width: 42px; height: 42px; min-width: 42px; }
+  .vx-demo-3 .project-preview { padding: 18px; }
+  .preview-marina-card { grid-template-columns: 42% 58%; }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .vx-demo-3 .works-feed-item:hover,
+  .vx-demo-3 .works-feed-item:hover .work-img-wrapper,
+  .vx-demo-3 .works-feed-item:hover .work-img-wrapper img,
+  .vx-demo-3 .works-feed-item:hover .preview-browser,
+  .vx-demo-3 .works-feed-item:hover .preview-phone,
+  .vx-demo-3 .works-feed-item:hover .preview-marina-card {
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto !important; }
   .motion-enabled .project-reveal,
