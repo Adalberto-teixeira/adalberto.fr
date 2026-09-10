@@ -10,9 +10,29 @@ const keywordMap = {};
 
 const chatFlow = {};
 
+let lastFlowId = null;
+
+const semanticAliases = {
+    skills: ["react", "next js", "nextjs", "typescript", "tailwind", "supabase", "javascript", "html", "css", "wordpress", "wix", "stack", "framework", "programmation", "developpement", "niveau technique"],
+    projets: ["gio tools", "giotools", "erica glow", "erica", "pwa", "application", "plateforme", "reservation", "template", "site client", "portfolio", "realisation"],
+    contact: ["disponible", "disponibilite", "recruter", "embaucher", "alternance", "stage", "mission", "opportunite", "telephone", "email", "martigues", "localisation"],
+    experience: ["travaille", "emploi", "entreprise", "lidl", "critec", "emmg", "batiment", "manager", "terrain"],
+    education: ["apprentissage", "autodidacte", "appris", "ecole", "formation", "etudes"],
+    languages: ["portugais", "francais", "anglais", "espagnol", "langue"],
+    hobbies: ["sport", "athletisme", "course", "loisir", "passion"],
+    cv: ["pdf", "telechargement", "curriculum", "document cv"]
+};
+
 const chatAvatarPath = document.getElementById('chat-avatar').getAttribute('src');
 
 const isArabic = document.documentElement.lang === 'ar';
+
+const escapeHTML = (value) => String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 
 /* [FR] Rend la recherche insensible aux accents : "competences" == "compétences". */
 const deaccent = (str) => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -86,8 +106,8 @@ const displayNextProject = async () => {
     const project = projectsSequenceData[currentProjectIndex];
     if (!project) return;
     const totalProjects = projectsSequenceData.length;
-    const introAnnouncement = isArabic ? `المشروع ${currentProjectIndex + 1} من ${totalProjects} : **${project.title}**` : `Project ${currentProjectIndex + 1} of ${totalProjects} : **${project.title}**`;
-    const nextBtnText = isArabic ? "المشروع التالي" : "Show Next Project";
+    const introAnnouncement = isArabic ? `المشروع ${currentProjectIndex + 1} من ${totalProjects} : **${project.title}**` : `Projet ${currentProjectIndex + 1} sur ${totalProjects} : **${project.title}**`;
+    const nextBtnText = isArabic ? "المشروع التالي" : "Projet suivant";
     const isLast = currentProjectIndex === totalProjects - 1;
     const navButtons = isLast ? [] : [{ 
         text: nextBtnText, 
@@ -250,10 +270,12 @@ const startConversationFlow = async (flowId) => {
         let textToDisplay = message.text || "";
         await new Promise(async resolve => {
             if (message.speaker === 'A') {
-                await new Promise(r => setTimeout(r, message.delay || 500));
-                const typingIndicator = showTypingIndicator(isFirstMessage);
-                await new Promise(r => setTimeout(r, 1100));
-                await hideTypingIndicator(typingIndicator);
+                await new Promise(r => setTimeout(r, message.delay ?? 500));
+                if (!message.skipTyping) {
+                    const typingIndicator = showTypingIndicator(isFirstMessage);
+                    await new Promise(r => setTimeout(r, 1100));
+                    await hideTypingIndicator(typingIndicator);
+                }
                 const messageElement = createMessageElement(message, isFirstMessage);
                 isFirstMessage = false;
                 const bubble = messageElement.querySelector('.message-bubble');
@@ -439,28 +461,60 @@ const processCommand = (command) => {
     const plainInput = deaccent(cleanedInput);
     if (keywordMap[plainInput]) return keywordMap[plainInput];
     if (chatFlow[plainInput]) return plainInput;
-    let bestMatchId = null;
-    let minDistance = 99;
-    const TYPO_THRESHOLD = 2;
-    const allKeywords = Object.keys(keywordMap);
-    for (const key of allKeywords) {
-        const distance = levenshtein(cleanedInput, key);
-        if (distance <= TYPO_THRESHOLD && distance < minDistance) {
-            minDistance = distance;
-            bestMatchId = keywordMap[key];
-        }
-        if (cleanedInput.includes(key) && key.length > 3) {
-            return keywordMap[key];
-        }
+    const normalized = deaccent(cleanedInput)
+        .replace(/[^a-z0-9\s-]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+    if (/^(et |et alors|et lui|encore|plus de details|continue)/.test(normalized) && lastFlowId) {
+        return lastFlowId;
     }
-    return bestMatchId || 'error';
+
+    const intentEntries = { ...semanticAliases };
+    Object.entries(keywordMap).forEach(([keyword, flowId]) => {
+        if (!intentEntries[flowId]) intentEntries[flowId] = [];
+        intentEntries[flowId].push(deaccent(keyword));
+    });
+
+    const stopWords = new Set(["a", "au", "aux", "avec", "ce", "ces", "de", "des", "du", "en", "est", "et", "il", "la", "le", "les", "me", "que", "qui", "sa", "ses", "son", "sur", "un", "une", "vous"]);
+    const inputTokens = normalized.split(" ").filter(token => token.length > 1 && !stopWords.has(token));
+    let bestMatchId = null;
+    let bestScore = 0;
+
+    Object.entries(intentEntries).forEach(([flowId, aliases]) => {
+        aliases.forEach((rawAlias) => {
+            const alias = deaccent(rawAlias.toLowerCase()).replace(/[^a-z0-9\s-]/g, " ").trim();
+            if (!alias) return;
+            let score = 0;
+            if (normalized === alias) score = 100;
+            else if (normalized.includes(alias) && alias.length > 3) score = 72 + Math.min(alias.length, 20);
+            else {
+                const aliasTokens = alias.split(" ").filter(token => token.length > 1 && !stopWords.has(token));
+                const matched = aliasTokens.filter(aliasToken => inputTokens.some(inputToken =>
+                    inputToken === aliasToken ||
+                    (Math.max(inputToken.length, aliasToken.length) > 4 && levenshtein(inputToken, aliasToken) <= 1)
+                )).length;
+                if (matched) score = (matched / aliasTokens.length) * 55;
+            }
+            if (score > bestScore) {
+                bestScore = score;
+                bestMatchId = flowId;
+            }
+        });
+    });
+
+    if (/projet|site|plateforme|application/.test(normalized) && /react|next|typescript|pwa|supabase/.test(normalized)) {
+        return "projets";
+    }
+
+    return bestScore >= 28 ? bestMatchId : 'error';
 };
 
 /* ==========================================================================
 The orchestrator that handles user actions and screen transitions.
 ========================================================================== */
 
-const generateAndProcessResponse = async (command, displayText = command) => {
+const generateAndProcessResponse = async (command, displayText = command, preferAI = false) => {
     const intro = document.getElementById('intro-screen');
     if (intro && !intro.classList.contains('fade-out')) {
         intro.classList.add('fade-out');
@@ -476,12 +530,32 @@ const generateAndProcessResponse = async (command, displayText = command) => {
         allOptions[allOptions.length - 1].remove();
     }
     const flowId = processCommand(command);
+    if (flowId && flowId !== "error" && flowId !== "__handled") lastFlowId = flowId;
     chatInput.value = '';
     toggleSendButtonState();
     const userMessage = { speaker: 'U', text: displayText, delay: 0 };
     const userElement = createMessageElement(userMessage);
     chatWindow.appendChild(userElement);
     scrollToBottom();
+
+    if (preferAI && window.AdalbertoAI?.isReady()) {
+        const inputWrapper = document.getElementById('input-nav-wrapper');
+        if (inputWrapper) inputWrapper.classList.add('disabled');
+        chatInput.disabled = true;
+        sendButton.disabled = true;
+        const indicator = showTypingIndicator(true);
+        const answer = await window.AdalbertoAI.ask(command);
+        await hideTypingIndicator(indicator);
+        if (answer) {
+            const aiFlowId = `ai_answer_${Date.now()}`;
+            chatFlow[aiFlowId] = [{ speaker: 'A', text: escapeHTML(answer), delay: 0, skipTyping: true }];
+            await startConversationFlow(aiFlowId);
+            delete chatFlow[aiFlowId];
+            return;
+        }
+        if (inputWrapper) inputWrapper.classList.remove('disabled');
+        chatInput.disabled = false;
+    }
     await startConversationFlow(flowId);
 };
 
@@ -652,7 +726,7 @@ const createMessageElement = (message, showAvatar = false) => {
         });
     } 
     else if (message.speaker === 'U') {
-        bubble.innerHTML = message.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        bubble.textContent = message.text;
     }
     row.appendChild(bubble);
     return row;
@@ -1027,12 +1101,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event Listeners for User Input and the Send Button
     chatInput.addEventListener('input', toggleSendButtonState);
     sendButton.addEventListener('click', () => {
-        if (!sendButton.disabled) generateAndProcessResponse(chatInput.value);
+        if (!sendButton.disabled) generateAndProcessResponse(chatInput.value, chatInput.value, true);
     });
     chatInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            if (chatInput.value.trim() !== '') generateAndProcessResponse(chatInput.value);
+            if (chatInput.value.trim() !== '') generateAndProcessResponse(chatInput.value, chatInput.value, true);
         }
     });
     toggleSendButtonState();
