@@ -27,6 +27,13 @@ const chatAvatarPath = document.getElementById('chat-avatar').getAttribute('src'
 
 const isArabic = document.documentElement.lang === 'ar';
 
+const escapeHTML = (value) => String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
 /* [FR] Rend la recherche insensible aux accents : "competences" == "compétences". */
 const deaccent = (str) => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
@@ -263,10 +270,12 @@ const startConversationFlow = async (flowId) => {
         let textToDisplay = message.text || "";
         await new Promise(async resolve => {
             if (message.speaker === 'A') {
-                await new Promise(r => setTimeout(r, message.delay || 500));
-                const typingIndicator = showTypingIndicator(isFirstMessage);
-                await new Promise(r => setTimeout(r, 1100));
-                await hideTypingIndicator(typingIndicator);
+                await new Promise(r => setTimeout(r, message.delay ?? 500));
+                if (!message.skipTyping) {
+                    const typingIndicator = showTypingIndicator(isFirstMessage);
+                    await new Promise(r => setTimeout(r, 1100));
+                    await hideTypingIndicator(typingIndicator);
+                }
                 const messageElement = createMessageElement(message, isFirstMessage);
                 isFirstMessage = false;
                 const bubble = messageElement.querySelector('.message-bubble');
@@ -505,7 +514,7 @@ const processCommand = (command) => {
 The orchestrator that handles user actions and screen transitions.
 ========================================================================== */
 
-const generateAndProcessResponse = async (command, displayText = command) => {
+const generateAndProcessResponse = async (command, displayText = command, preferAI = false) => {
     const intro = document.getElementById('intro-screen');
     if (intro && !intro.classList.contains('fade-out')) {
         intro.classList.add('fade-out');
@@ -528,6 +537,25 @@ const generateAndProcessResponse = async (command, displayText = command) => {
     const userElement = createMessageElement(userMessage);
     chatWindow.appendChild(userElement);
     scrollToBottom();
+
+    if (preferAI && window.AdalbertoAI?.isReady()) {
+        const inputWrapper = document.getElementById('input-nav-wrapper');
+        if (inputWrapper) inputWrapper.classList.add('disabled');
+        chatInput.disabled = true;
+        sendButton.disabled = true;
+        const indicator = showTypingIndicator(true);
+        const answer = await window.AdalbertoAI.ask(command);
+        await hideTypingIndicator(indicator);
+        if (answer) {
+            const aiFlowId = `ai_answer_${Date.now()}`;
+            chatFlow[aiFlowId] = [{ speaker: 'A', text: escapeHTML(answer), delay: 0, skipTyping: true }];
+            await startConversationFlow(aiFlowId);
+            delete chatFlow[aiFlowId];
+            return;
+        }
+        if (inputWrapper) inputWrapper.classList.remove('disabled');
+        chatInput.disabled = false;
+    }
     await startConversationFlow(flowId);
 };
 
@@ -698,7 +726,7 @@ const createMessageElement = (message, showAvatar = false) => {
         });
     } 
     else if (message.speaker === 'U') {
-        bubble.innerHTML = message.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        bubble.textContent = message.text;
     }
     row.appendChild(bubble);
     return row;
@@ -1073,12 +1101,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event Listeners for User Input and the Send Button
     chatInput.addEventListener('input', toggleSendButtonState);
     sendButton.addEventListener('click', () => {
-        if (!sendButton.disabled) generateAndProcessResponse(chatInput.value);
+        if (!sendButton.disabled) generateAndProcessResponse(chatInput.value, chatInput.value, true);
     });
     chatInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            if (chatInput.value.trim() !== '') generateAndProcessResponse(chatInput.value);
+            if (chatInput.value.trim() !== '') generateAndProcessResponse(chatInput.value, chatInput.value, true);
         }
     });
     toggleSendButtonState();

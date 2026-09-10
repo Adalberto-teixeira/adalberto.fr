@@ -58,4 +58,15 @@
     "est il disponible", "disponibilite", "alternance", "stage", "mission",
     "offre emploi", "recrutement", "ou habite adalberto"
   ]);
+
+  const introTitle = document.querySelector("#intro-screen .intro-text h1");
+  const introQuote = document.querySelector("#intro-screen .quote p");
+  const introSignature = document.querySelector("#intro-screen .quote span");
+  const chatInput = document.getElementById("chat-input");
+  const footerText = document.getElementById("chat-footer-text");
+  if (introTitle) introTitle.innerHTML = "Je suis <span>l’assistant hybride</span>";
+  if (introQuote) introQuote.textContent = "Posez une question libre sur son parcours, ses compétences ou ses projets : je réponds naturellement et sans inventer.";
+  if (introSignature) introSignature.textContent = "IA du CV · réponses vérifiées";
+  if (chatInput) chatInput.placeholder = "Posez votre question sur Adalberto…";
+  if (footerText) footerText.innerHTML = '<i class="fa-solid fa-sparkles"></i> IA pour les questions libres · réponses rapides disponibles hors ligne';
 })();
