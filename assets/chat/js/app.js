@@ -10,6 +10,19 @@ const keywordMap = {};
 
 const chatFlow = {};
 
+let lastFlowId = null;
+
+const semanticAliases = {
+    skills: ["react", "next js", "nextjs", "typescript", "tailwind", "supabase", "javascript", "html", "css", "wordpress", "wix", "stack", "framework", "programmation", "developpement", "niveau technique"],
+    projets: ["gio tools", "giotools", "erica glow", "erica", "pwa", "application", "plateforme", "reservation", "template", "site client", "portfolio", "realisation"],
+    contact: ["disponible", "disponibilite", "recruter", "embaucher", "alternance", "stage", "mission", "opportunite", "telephone", "email", "martigues", "localisation"],
+    experience: ["travaille", "emploi", "entreprise", "lidl", "critec", "emmg", "batiment", "manager", "terrain"],
+    education: ["apprentissage", "autodidacte", "appris", "ecole", "formation", "etudes"],
+    languages: ["portugais", "francais", "anglais", "espagnol", "langue"],
+    hobbies: ["sport", "athletisme", "course", "loisir", "passion"],
+    cv: ["pdf", "telechargement", "curriculum", "document cv"]
+};
+
 const chatAvatarPath = document.getElementById('chat-avatar').getAttribute('src');
 
 const isArabic = document.documentElement.lang === 'ar';
@@ -86,8 +99,8 @@ const displayNextProject = async () => {
     const project = projectsSequenceData[currentProjectIndex];
     if (!project) return;
     const totalProjects = projectsSequenceData.length;
-    const introAnnouncement = isArabic ? `المشروع ${currentProjectIndex + 1} من ${totalProjects} : **${project.title}**` : `Project ${currentProjectIndex + 1} of ${totalProjects} : **${project.title}**`;
-    const nextBtnText = isArabic ? "المشروع التالي" : "Show Next Project";
+    const introAnnouncement = isArabic ? `المشروع ${currentProjectIndex + 1} من ${totalProjects} : **${project.title}**` : `Projet ${currentProjectIndex + 1} sur ${totalProjects} : **${project.title}**`;
+    const nextBtnText = isArabic ? "المشروع التالي" : "Projet suivant";
     const isLast = currentProjectIndex === totalProjects - 1;
     const navButtons = isLast ? [] : [{ 
         text: nextBtnText, 
@@ -439,21 +452,53 @@ const processCommand = (command) => {
     const plainInput = deaccent(cleanedInput);
     if (keywordMap[plainInput]) return keywordMap[plainInput];
     if (chatFlow[plainInput]) return plainInput;
-    let bestMatchId = null;
-    let minDistance = 99;
-    const TYPO_THRESHOLD = 2;
-    const allKeywords = Object.keys(keywordMap);
-    for (const key of allKeywords) {
-        const distance = levenshtein(cleanedInput, key);
-        if (distance <= TYPO_THRESHOLD && distance < minDistance) {
-            minDistance = distance;
-            bestMatchId = keywordMap[key];
-        }
-        if (cleanedInput.includes(key) && key.length > 3) {
-            return keywordMap[key];
-        }
+    const normalized = deaccent(cleanedInput)
+        .replace(/[^a-z0-9\s-]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+    if (/^(et |et alors|et lui|encore|plus de details|continue)/.test(normalized) && lastFlowId) {
+        return lastFlowId;
     }
-    return bestMatchId || 'error';
+
+    const intentEntries = { ...semanticAliases };
+    Object.entries(keywordMap).forEach(([keyword, flowId]) => {
+        if (!intentEntries[flowId]) intentEntries[flowId] = [];
+        intentEntries[flowId].push(deaccent(keyword));
+    });
+
+    const stopWords = new Set(["a", "au", "aux", "avec", "ce", "ces", "de", "des", "du", "en", "est", "et", "il", "la", "le", "les", "me", "que", "qui", "sa", "ses", "son", "sur", "un", "une", "vous"]);
+    const inputTokens = normalized.split(" ").filter(token => token.length > 1 && !stopWords.has(token));
+    let bestMatchId = null;
+    let bestScore = 0;
+
+    Object.entries(intentEntries).forEach(([flowId, aliases]) => {
+        aliases.forEach((rawAlias) => {
+            const alias = deaccent(rawAlias.toLowerCase()).replace(/[^a-z0-9\s-]/g, " ").trim();
+            if (!alias) return;
+            let score = 0;
+            if (normalized === alias) score = 100;
+            else if (normalized.includes(alias) && alias.length > 3) score = 72 + Math.min(alias.length, 20);
+            else {
+                const aliasTokens = alias.split(" ").filter(token => token.length > 1 && !stopWords.has(token));
+                const matched = aliasTokens.filter(aliasToken => inputTokens.some(inputToken =>
+                    inputToken === aliasToken ||
+                    (Math.max(inputToken.length, aliasToken.length) > 4 && levenshtein(inputToken, aliasToken) <= 1)
+                )).length;
+                if (matched) score = (matched / aliasTokens.length) * 55;
+            }
+            if (score > bestScore) {
+                bestScore = score;
+                bestMatchId = flowId;
+            }
+        });
+    });
+
+    if (/projet|site|plateforme|application/.test(normalized) && /react|next|typescript|pwa|supabase/.test(normalized)) {
+        return "projets";
+    }
+
+    return bestScore >= 28 ? bestMatchId : 'error';
 };
 
 /* ==========================================================================
@@ -476,6 +521,7 @@ const generateAndProcessResponse = async (command, displayText = command) => {
         allOptions[allOptions.length - 1].remove();
     }
     const flowId = processCommand(command);
+    if (flowId && flowId !== "error" && flowId !== "__handled") lastFlowId = flowId;
     chatInput.value = '';
     toggleSendButtonState();
     const userMessage = { speaker: 'U', text: displayText, delay: 0 };

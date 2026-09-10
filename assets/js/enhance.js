@@ -147,4 +147,13 @@
       }
     });
   }
+
+  /* ---------- Portfolio galleries ---------- */
+  document.querySelectorAll("[data-gallery]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const gallery = (button.dataset.gallery || "").split("|").filter(Boolean);
+      if (!gallery.length || typeof window.openMasterModal !== "function") return;
+      window.openMasterModal({ mediaType: "gallery", gallery });
+    });
+  });
 })();
