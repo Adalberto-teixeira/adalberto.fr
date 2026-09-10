@@ -2,6 +2,8 @@
 
 Worker Cloudflare qui répond aux questions libres sur le profil professionnel d'Adalberto. Le site conserve automatiquement son assistant local si le Worker ou le quota IA est indisponible.
 
+[Déployer ce Worker sur Cloudflare](https://deploy.workers.cloudflare.com/?url=https://github.com/Adalberto-teixeira/adalberto.fr/tree/redesign-portfolio-v2/worker-ai)
+
 ## Déploiement
 
 1. Ouvrir un terminal dans ce dossier.
